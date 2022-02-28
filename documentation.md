@@ -1,9 +1,12 @@
+This project made to make easy and quick way to share/rent car for short/long term. Users can search car for rent in different cities for their needs. Also user can share their own car to other users,  with a few clicks.
+ 
+
+Projects description:
+1. Sign in/Log in 
+2. Slider to change rent/share.
 
 
-Need to create:
-
-1. Payment system
-2. Two differnt Sign in - for person who rent car and for person who share car
+2. Payment system.
 3. Connection to Google map and using geolocation to filter requests
 4. Driver license verification                                      ???????
 5.
@@ -35,7 +38,7 @@ Used textology:
 2. Backend 
     2.1 JavaScript
     2.2 Vue.Js
-    2.3 PostrgresSql or MangoDB ( test for different size of date)
+    2.3 MangoDB 
 
 
 Details:
