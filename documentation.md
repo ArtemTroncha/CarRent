@@ -1,32 +1,32 @@
-This project made to make easy and quick way to share/rent car for short/long term. Users can search car for rent in different cities for their needs. Also user can share their own car to other users,  with a few clicks.
+1. This project made to make easy and quick way to share/rent car for short/long term. Users can search car for rent in different cities for their needs. Also user can share their own car to other users,  with a few clicks.
  
 
-Projects description:
-1. Sign in/Log in 
-2. Slider to change rent/share.
-
-
-2. Payment system.
-3. Connection to Google map and using geolocation to filter requests
-4. Driver license verification                                      ???????
-5.
+2. Projects description:
+    1. Sign in/Log in 
+    2. Slider to change rent/share interface.
+    3. Payment system.
+    4. Connection to Google map and using geolocation to filter requests
+    5. Driver license verification 
 
 
 
-2.1 Fields for person who rent car :
+
+2.1. Registration fields:
     -- Name
     -- Surname 
     -- Email 
+    -- City information
+        -- Adress 
+        -- Post Code - optinal 
+        -- City
+        -- Country - for global site 
     -- Telefon Number 
-    -- Driver license verification
 
-Fields for person who share car:
-    -- Name
-    -- Surname 
-    -- Email 
-    -- Telefon Number
+After registration user need to confrim on the email.
 
-//todo: rewrite registration 
+2.2. 
+
+//TODO: rewrite registration 
 
 
 Used textology:
