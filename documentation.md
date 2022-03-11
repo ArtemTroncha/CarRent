@@ -26,7 +26,7 @@ After registration user need to confrim on the email.
 
 2.2. 
 
-//TODO: rewrite registration 
+
 
 
 Used textology:
