@@ -1,19 +1,35 @@
 const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-
+const config = require('./config/default.json');
+//const DB_URL = 'mongodb+srv://Artem_Troncha:pagbek-6febcu-Hownof@users.0myk7.mongodb.net/Car_Rent?retryWrites=true&w=majority'
+const mongoose  = require('mongoose');
 const app = express();
 
 //middleware
-app.use(bodyParser.json());
-app.use(cors());
+app.use(express.json());
 
-const users = require('./routes/api/users')
+
+const users = require('./routes/users')
+//const cars = require('./routes/cars');
+
 
 app.use('/api/users', users);
+//app.use('/api/cars', cars);
 
-const PORT = process.env.PORT || 3000;
+//config
+const DB_URL = config.DB_URL
+const PORT = config.PORT
 
-app.listen(PORT, () => {
-    console.log('Server started');
-})
+//start server
+const start = async ()=> {
+    try {
+        await mongoose.connect(DB_URL)
+        app.listen(PORT, () => {
+            console.log(`Server started on port ${PORT}`);
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+start()
