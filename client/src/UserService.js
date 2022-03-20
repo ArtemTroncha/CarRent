@@ -1,17 +1,12 @@
-import axios from 'axios';
-const url='http://localhost:3000/api/posts';
+import axios from "axios";
+const url='http://localhost:3000/api/users'
 class UserService{
     //get posts
     static getPosts() {
         return new Promise ((resolve,reject) => {
             axios.get(url).then((res) => {
-                const data = res.data;
-                resolve(
-                    data.map(post => ({
-                        ...post,
-                        createdAt: new Date(post.createdAt)
-                    }))
-                );
+                const data=res.data;
+                resolve(data.body)
             })
             .catch((err)=> {
                 reject(err);
@@ -19,6 +14,15 @@ class UserService{
             
         });
     }
- 
+    static register(email,password){
+        return axios.post("http://localhost:3000/api/users/registration",{email,password})     
+    }
+    static login(email,password){
+            return this.axios.post(url+"/login",{
+            email,password}
+            )
+    }
 }
-UserService;
+
+export default UserService
+

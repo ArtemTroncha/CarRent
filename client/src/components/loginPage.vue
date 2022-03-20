@@ -12,8 +12,7 @@
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input v-model="password" type="password" class="form-control" id="exampleInputPassword1">
     </div>
-    <button @click = "Create" type="submit" class="btn btn-dark">Regist</button>
-    <p class="error" v-if="error">{{error}}</p>
+    <button @click = "Login" type="submit" class="btn btn-dark">Log in</button>
   </form>
 </div>
 </div>
@@ -23,28 +22,23 @@
 <script>
 import UserService from '../UserService'
 export default {
-  name: 'UserComponent',
+  name: 'loginPage',
   data () {
     return{
+      formreg:{
        email:'',
-       password:'',
-       error:''
+       password:''
+      },
+      error:''
   }
 },
-methods:{
-  async Create(){
+  async Login(){
     try{
-     UserService.register(this.email,this.password)}
+      UserService.login(this.email,this.password)}
      catch(err){
        this.error=err.message
      }
   }
 }
-}
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
-
-</style>
