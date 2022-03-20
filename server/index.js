@@ -9,11 +9,11 @@ app.use(express.json());
 
 
 const users = require('./routes/users')
-//const cars = require('./routes/cars');
+const posts = require('./routes/posts');
 
 
 app.use('/api/users', users);
-//app.use('/api/cars', cars);
+app.use('/api/posts', posts);
 
 //config
 const DB_URL = config.DB_URL
