@@ -10,4 +10,4 @@ const Post = new Schema({
     year: {type: Number, required: true}
 })
 
-module.exports = model('Post',Post);
+module.exports = model('Post',Post); 
