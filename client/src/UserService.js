@@ -15,11 +15,11 @@ class UserService{
         });
     }
     static register(email,password){
-        return axios.post("http://localhost:3000/api/users/registration",{email,password})     
+        return axios.post(url+'/registration',{email,password})     
     }
-    static login(email,password){
-            return this.axios.post(url+"/login",{
-            email,password}
+    static login(Email,Password){
+            return this.axios.post(url+"/login",
+                {Email,Password}
             )
     }
 }

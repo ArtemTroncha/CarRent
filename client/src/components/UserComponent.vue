@@ -6,11 +6,11 @@
     
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input v-model="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <input v-model="formreg.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input v-model="password" type="password" class="form-control" id="exampleInputPassword1">
+      <input v-model="formreg.password" type="password" class="form-control" id="exampleInputPassword1">
     </div>
     <button @click = "Create" type="submit" class="btn btn-dark">Regist</button>
     <p class="error" v-if="error">{{error}}</p>
@@ -26,19 +26,23 @@ export default {
   name: 'UserComponent',
   data () {
     return{
+      formreg:{
        email:'',
-       password:'',
+       password:''},
        error:''
   }
 },
 methods:{
   async Create(){
     try{
-     UserService.register(this.email,this.password)}
+      UserService.register(this.formreg.email,this.formreg.password)
+    }
      catch(err){
        this.error=err.message
      }
-  }
+  },
+ 
+
 }
 }
 

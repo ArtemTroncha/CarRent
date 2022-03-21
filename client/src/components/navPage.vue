@@ -7,13 +7,13 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link " href="">Home </a>
+          <router-link to='/' class="nav-link " >Home </router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">login</a>
+          <router-link to='/login' class="nav-link" >login</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">register</a>
+          <router-link to='/registration' class="nav-link" >register</router-link>
         </li>
       </ul>
     </div>

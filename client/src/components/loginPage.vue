@@ -29,12 +29,14 @@ export default {
        email:'',
        password:''
       },
-      error:''
+      error:'',
   }
 },
   async Login(){
     try{
-      UserService.login(this.email,this.password)}
+      const response= await UserService.login(this.formreg.email,this.formreg.password)
+      localStorage.getItem('token',response.data.token)
+    }
      catch(err){
        this.error=err.message
      }
