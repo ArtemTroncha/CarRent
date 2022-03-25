@@ -36,7 +36,7 @@ router.get('/:id',
 router.post('/', 
     async(req,res) => {
     try {
-        const {createdBy_ID, brand, model, version, year} = req.body
+        const {createdBy_ID} = req.body
 
         var isValid = mongoose.Types.ObjectId.isValid(createdBy_ID);
         if(!isValid)
@@ -49,7 +49,14 @@ router.post('/',
         if (!creator) {
             return res.status(400).json({message: "Cant find creator"})
         }
-        const post = new Post({createdBy_ID, brand, model, version, year})
+        //TODO: available date validate
+
+        //TODO: seat count min max validate
+
+        
+
+        //create post if its ok
+        const post = new Post(req.body)
         await post.save()
         return res.send({maessage: "Post created"}) 
 

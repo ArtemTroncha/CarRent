@@ -38,7 +38,7 @@ router.post('/registration',
         if (!errors.isEmpty()) {
             return res.status(400).json({massage: "Uncorrect request",errors})
         }
-        const {email, password} = req.body
+        const {name , surname, email, password} = req.body
 
         const candidate = await User.findOne({email})
 
@@ -46,7 +46,7 @@ router.post('/registration',
             return res.status(400).json({massage: "Email already exist"})
         }
         const hashPassword = await bcrypt.hash(password,8)
-        const user = new User({email, password: hashPassword})
+        const user = new User({name, surname, email, password: hashPassword})
         await user.save()
         return res.send({maessage: "User created"})  
 
