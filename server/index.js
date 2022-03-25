@@ -3,9 +3,11 @@ const config = require('./config/default.json');
 //const DB_URL = 'mongodb+srv://Artem_Troncha:pagbek-6febcu-Hownof@users.0myk7.mongodb.net/Car_Rent?retryWrites=true&w=majority'
 const mongoose  = require('mongoose');
 const app = express();
+const cors = require('cors')
 
 //middleware
 app.use(express.json());
+app.use(cors())
 
 
 const users = require('./routes/users')

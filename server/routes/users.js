@@ -5,13 +5,24 @@ const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const router = express.Router()
 const config = require('../config/default.json')
+var ObjectId = require('mongoose').Types.ObjectId;
 
 const secretKey = config.secretKey
 
 
-//get users 
+//get all users 
 router.get('/', async (req,res) => {
     res.send(await User.find({}));
+})
+
+//get with id
+router.get('/:id',
+        [
+        check('id').customSanitizer(value => {
+            return ObjectId(value);
+        })],
+        async (req,res) => {
+            res.send(await User.find({_id: new ObjectId(req.params.id)}))
 })
 
 
@@ -62,7 +73,8 @@ router.post('/login', async (req,res) => {
         }
         const token = jwt.sign({id: user.id},'secret-key',{expiresIn: "1h"})
         return res.json({
-            token
+            token,
+            
         })
 
     } catch (error) {

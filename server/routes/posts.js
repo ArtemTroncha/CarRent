@@ -11,13 +11,24 @@ router.get('/', async (req,res) => {
     res.send(await Post.find({}))
 })
 
+//get all posts from one person bu person id
+router.get('/creator/:id', 
+    [
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async (req,res) => {
+        res.send(await Post.find({createdBy_ID: new ObjectId(req.params.id)}))
+})
+
+//get post with post id
 router.get('/:id', 
     [
     check('id').customSanitizer(value => {
         return ObjectId(value);
     })],
     async (req,res) => {
-        res.send(await Post.find({user_ID: new ObjectId(req.params.id)}))
+        res.send(await Post.find({_id: new ObjectId(req.params.id)}))
 })
 
 
