@@ -2,7 +2,7 @@
   <div class="container mt-4"> 
     <div class="row ">
     <div class="col-sm-5 mx-auto">
-     <form>
+     <form  @submit.prevent="Create">
     
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -34,15 +34,11 @@ export default {
 },
 methods:{
   async Create(){
-    try{
-      UserService.register(this.formreg.email,this.formreg.password)
-    }
-     catch(err){
-       this.error=err.message
-     }
-  },
- 
-
+    
+    const response= UserService.register(this.formreg.email,this.formreg.password)
+    console.log(response)
+    this.$router.push('/login')
+  }
 }
 }
 

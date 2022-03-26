@@ -1,0 +1,5 @@
+{
+    "DB_URL": "mongodb+srv://vue_express:ZaKsuFK_NQ57ypF@cluster0.ayujt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "PORT": 3000,
+    "secretKey": "constraint-few-valley" 
+}

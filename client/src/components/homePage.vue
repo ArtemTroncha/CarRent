@@ -1,16 +1,16 @@
 <template>
-    <h1>hello</h1>
+   <p>hello</p> 
 </template>
 <script>
-import axios from 'axios'
+import UserService from '../UserService'
 export default{
-    async created(){
-         await axios.get('http://localhost:3000/api/users',{
-        headers:{
-            Authorization:'Bearer'+localStorage.getItem('token')
-        }}
-        )
-    }
+   name:'homePage',
+   async created(){
+      const dec =UserService.decode(localStorage.getItem('token'))
+      console.log(dec.id)
+       const user =UserService.GetUser(dec.id)
+      console.log(user)
+   }
 }
 
 
