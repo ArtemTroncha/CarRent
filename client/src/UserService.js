@@ -4,10 +4,10 @@ const url='http://localhost:3000/api/users'
 class UserService{
     static GetUser(id){
             axios.get(url+'/:id',{id}).then((res) =>{
-                resolve(res.data.body)
+                return (res.data.body)
             })
             .catch((err)=> {
-                reject(err);
+                return (err);
             })
             
         }
