@@ -7,11 +7,37 @@ const {check} = require('express-validator');
 const mongoose = require('mongoose')
 
 //get all posts
-router.get('/', async (req,res) => {
-    res.send(await Post.find({}))
+// router.get('/', async (req,res) => {
+//     res.status(200).send(await Post.find({},
+//         {title: 1, available_from : 1}))
+// })
+
+//get all posts( full )
+router.get('/full', async (req,res) => {
+    res.status(200).send(await Post.find({}))
 })
 
-//get all posts from one person bu person id
+
+  
+//filter
+//TODO: validate year, 
+router.get('/', async (req,res) => {
+    
+    const match = {}
+    if(req.query.brand){ match.brand = req.query.brand }
+    if(req.query.model){ match.model = req.query.model }
+    if(req.query.version){ match.version = req.query.version}
+    if(req.query.year){ match.year = req.query.year }
+    if(req.query.color){ match.color = req.query.color }
+    if(req.query.condition){ match.condition = req.query.condition }
+    if(req.query.meileage){ match.brand = req.query.brand }
+
+    console.log(match)
+    res.status(200).send(await Post.find(match))
+   
+})
+
+//get all posts from one person by person id
 router.get('/creator/:id', 
     [
     check('id').customSanitizer(value => {
