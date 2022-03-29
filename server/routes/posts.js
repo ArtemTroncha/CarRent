@@ -7,10 +7,10 @@ const {check} = require('express-validator');
 const mongoose = require('mongoose')
 
 //get all posts
-// router.get('/', async (req,res) => {
-//     res.status(200).send(await Post.find({},
-//         {title: 1, available_from : 1}))
-// })
+router.get('/', async (req,res) => {
+    res.status(200).send(await Post.find({},
+        {title: 1, available_from : 1}))
+})
 
 //get all posts( full )
 router.get('/full', async (req,res) => {
@@ -21,7 +21,7 @@ router.get('/full', async (req,res) => {
   
 //filter
 //TODO: validate year, 
-router.get('/', async (req,res) => {
+router.get('/search', async (req,res) => {
     
     const match = {}
     if(req.query.brand){ match.brand = req.query.brand }
