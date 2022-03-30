@@ -1,5 +1,0 @@
-{
-    "DB_URL": "mongodb+srv://Artem_Troncha:pagbek-6febcu-Hownof@users.0myk7.mongodb.net/Car_Rent?retryWrites=true&w=majority",
-    "PORT": 3000,
-    "secretKey": "constraint-few-valley" 
-}
