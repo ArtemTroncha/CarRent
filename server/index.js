@@ -1,25 +1,24 @@
 const express = require('express')
-const config = require('./config/default.json');
-//const DB_URL = 'mongodb+srv://Artem_Troncha:pagbek-6febcu-Hownof@users.0myk7.mongodb.net/Car_Rent?retryWrites=true&w=majority'
 const mongoose  = require('mongoose');
 const app = express();
 const cors = require('cors')
+require('dotenv').config() // dotenv
+
+//Routes
+const users = require('./routes/users')
+const posts = require('./routes/posts')
 
 //middleware
 app.use(express.json());
 app.use(cors())
 
-
-const users = require('./routes/users')
-const posts = require('./routes/posts');
-
-
+//Route middleware
 app.use('/api/users', users);
 app.use('/api/posts', posts);
 
 //config
-const DB_URL = config.DB_URL
-const PORT = config.PORT
+const DB_URL = process.env.DB_URL
+const PORT = process.env.PORT
 
 //start server
 const start = async ()=> {

@@ -4,10 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const router = express.Router()
-const config = require('../config/default.json')
 var ObjectId = require('mongoose').Types.ObjectId;
 
-const secretKey = config.secretKey
 
 
 //get all users 
