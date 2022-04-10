@@ -1,15 +1,39 @@
 <template>
-   <p>hello</p> 
+<div class="container mt-4"> 
+   <div class="row justify-content-center">
+      <div class="col-5">
+       <div class="input-group rounded">
+  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+     <button type="submit" class="btn btn-dark"></button>
+
+</div>
+      </div>
+   </div>
+</div>
+
+   <showCar/>
 </template>
 <script>
-import UserService from '../UserService'
+import showCar from './showCar'
 export default{
    name:'homePage',
+   components:{
+      showCar
+   },
+   data(){
+      return{
+         name:'',
+         surname:'',
+         email:''
+      }
+   },
+   methods:{
    async created(){
-      const dec =UserService.decode(localStorage.getItem('token'))
-      console.log(dec.id)
-       const user =UserService.GetUser(dec.id)
-      console.log(user)
+      
+     },
+   addCar(){
+      this.$router.push("/addCar")
+   }
    }
 }
 

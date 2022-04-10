@@ -3,7 +3,15 @@
     <div class="row ">
     <div class="col-sm-5 mx-auto">
      <form  @submit.prevent="Create">
-    
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input v-model="formreg.name" type="text" class="form-control" id="name" >
+      </div>
+      <div class="mb-3">
+        <label for="surname" class="form-label">Surname</label>
+        <input v-model="formreg.surname" type="text" class="form-control" id="surname">
+      </div>
+      
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email address</label>
       <input v-model="formreg.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -12,6 +20,7 @@
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input v-model="formreg.password" type="password" class="form-control" id="exampleInputPassword1">
     </div>
+    
     <button @click = "Create" type="submit" class="btn btn-dark">Regist</button>
     <p class="error" v-if="error">{{error}}</p>
   </form>
@@ -27,17 +36,23 @@ export default {
   data () {
     return{
       formreg:{
-       email:'',
-       password:''},
+        name:'',
+        surname:'',
+        email:'',
+       password:'',
+      },
        error:''
   }
 },
 methods:{
   async Create(){
     
-    const response= UserService.register(this.formreg.email,this.formreg.password)
-    console.log(response)
-    this.$router.push('/login')
+    UserService.register(this.formreg.name,this.formreg.surname,this.formreg.email,this.formreg.password)
+    .then((response)=>{
+    alert(response.data.massage),
+    this.$router.push('/')
+    })
+    
   }
 }
 }

@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-    "DB_URL": "mongodb+srv://vue_express:ZaKsuFK_NQ57ypF@cluster0.ayujt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-=======
     "DB_URL": "mongodb+srv://Artem_Troncha:pagbek-6febcu-Hownof@users.0myk7.mongodb.net/Car_Rent?retryWrites=true&w=majority",
->>>>>>> origin/backend
     "PORT": 3000,
     "secretKey": "constraint-few-valley" 
 }

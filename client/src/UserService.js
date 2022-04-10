@@ -3,14 +3,16 @@ import jwt_decode from "jwt-decode"
 const url='http://localhost:3000/api/users'
 class UserService{
     static GetUser(id){
-            axios.get(url+'/:id',{id}).then((res) =>{
-                return (res.data.body)
+        return new Promise ((resolve,reject) =>{
+            axios.get(url+'/'+id)
+            .then((res) =>{
+               resolve(res.data[0])
             })
             .catch((err)=> {
-                return (err);
+                reject(err)
             })
-            
         }
+    )}
     //get posts
     static decode(token){
         var decoded = jwt_decode(token);
@@ -27,12 +29,10 @@ class UserService{
             
         });
     }
-    static register(email,password){
-        return axios.post(url+'/registration',{email,password})
+    static register(name,surname,email,password){
+        return axios.post(url+'/registration',{name,surname,email,password})
         .then((res)=>{
-            console.log(res.data);
-        }).catch((err) => {
-            console.log(err.data)
+            return res
         })
     }
     static login(email,password){
@@ -42,7 +42,7 @@ class UserService{
                
                return res
             }).catch((err) => {
-                return err                
+                return err            
             })
     }
     

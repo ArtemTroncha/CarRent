@@ -7,6 +7,7 @@ const router = express.Router()
 const config = require('../config/default.json')
 var ObjectId = require('mongoose').Types.ObjectId;
 
+
 const secretKey = config.secretKey
 
 
@@ -17,13 +18,15 @@ router.get('/', async (req,res) => {
 
 //get with id
 router.get('/:id',
-        [
-        check('id').customSanitizer(value => {
-            return ObjectId(value);
-        })],
+[
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
         async (req,res) => {
-            res.send(await User.find({_id: new ObjectId(req.params.id)}))
+           
+            res.send(await User.find({'_id': new ObjectId(req.params.id)}))
 })
+
 
 
 //register users
@@ -48,7 +51,7 @@ router.post('/registration',
         const hashPassword = await bcrypt.hash(password,8)
         const user = new User({name, surname, email, password: hashPassword})
         await user.save()
-        return res.send({maessage: "User created"})  
+        return res.send({massage: "User created"})  
 
     } catch (error) {
         console.log(error);
