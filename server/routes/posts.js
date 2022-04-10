@@ -8,33 +8,43 @@ const mongoose = require('mongoose')
 
 //get all posts
 router.get('/', async (req,res) => {
-    res.status(200).send(await Post.find({},
-        {title: 1, available_from : 1}))
+    try {
+        res.status(200).send(await Post.find({}))
+    } catch (error) {
+        res.send({massage:"server error"}) 
+    }
 })
 
-//get all posts( full )
-router.get('/full', async (req,res) => {
-    res.status(200).send(await Post.find({}))
-})
+// //get all posts( full )
+// router.get('/full', async (req,res) => {
+//     try {
+//         res.status(200).send(await Post.find({}))
+//     } catch (error) {
+//         res.send({massage:"server error"}) 
+//     }
+// })
 
 
   
 //filter
 //TODO: validate year, 
 router.get('/search', async (req,res) => {
-    
-    const match = {}
-    if(req.query.brand){ match.brand = req.query.brand }
-    if(req.query.model){ match.model = req.query.model }
-    if(req.query.version){ match.version = req.query.version}
-    if(req.query.year){ match.year = req.query.year }
-    if(req.query.color){ match.color = req.query.color }
-    if(req.query.condition){ match.condition = req.query.condition }
-    if(req.query.meileage){ match.brand = req.query.brand }
+    try {
+        const match = {}
+        if(req.query.brand){ match.brand = req.query.brand }
+        if(req.query.version){ match.version = req.query.version}
+        if(req.query.model){ match.model = req.query.model }
+        if(req.query.color){ match.color = req.query.color }
+        if(req.query.condition){ match.condition = req.query.condition }
+        if(req.query.meileage){ match.brand = req.query.brand }
+        if(req.query.year){ match.year = req.query.year }
+        
+        console.log(match)
 
-    console.log(match)
     res.status(200).send(await Post.find(match))
-   
+    } catch (error) {
+        res.send({massage:"server error"})
+    }
 })
 
 //get all posts from one person by person id
@@ -44,7 +54,13 @@ router.get('/creator/:id',
         return ObjectId(value);
     })],
     async (req,res) => {
-        res.send(await Post.find({createdBy_ID: new ObjectId(req.params.id)}))
+        try {
+            res.send(await Post.find({createdBy_ID: new ObjectId(req.params.id)}))
+        } catch (error) {
+            console.log(error)
+            res.send({massage:"server error"})
+        }
+        res.status(201).send;
 })
 
 //get post with post id
@@ -54,7 +70,13 @@ router.get('/:id',
         return ObjectId(value);
     })],
     async (req,res) => {
-        res.send(await Post.find({_id: new ObjectId(req.params.id)}))
+        try {
+            res.send(await Post.find({_id: new ObjectId(req.params.id)}))
+        } catch (error) {
+            console.log(error)
+        res.send({massage:"server error"})
+        }
+        res.status(201).send;
 })
 
 

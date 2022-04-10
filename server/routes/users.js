@@ -52,7 +52,7 @@ router.post('/registration',
         console.log(error);
         res.send({massage:"server error"})
     }
-    res.status(201).send;
+    res.status(201).send({maessage: "User created"});
 })
 
 //login users
@@ -82,6 +82,22 @@ router.post('/login', async (req,res) => {
     res.status(201).send;
 })
 
+//edit user info
+router.put('/:id',[
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async (req,res) => {
+    try {
+        const {name,surname,email } = req.body
+        await User.findByIdAndUpdate(req.params.id,{name: name, surname: surname , email: email})
+        
+    } catch (error) {
+        console.log(error);
+        res.send({massage:"server error"})
+    }
+    res.status(201).send({message: "User updated"});
+})
 //delete users
 
 
