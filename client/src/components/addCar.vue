@@ -6,16 +6,20 @@
     <div class="col-sm-8 mx-auto">
   <div class="row">
     <div class="col mb-2">
-    <label for="brand" class="form-label">Brand</label>
-      <select v-model="brand" class="form-control" id="brand">
+    <label for="brand"  class="form-label">Brand</label>
+      <select v-model="Brand" class="form-control" id="brand">
         <option v-for="brand in autocomplete.Brands" :key='brand'>
         {{ brand }}
       </option>
     </select>
     </div>
     <div class="col ">
-        <label for="model" class="form-label">Model</label>
-      <input v-model="Model" id="model" type="text" class="form-control" placeholder="Model" aria-label="Model">
+      <label for="model" class="form-label">Model</label>
+      <select v-model="Model" class="form-control" id="model">
+        <option v-for="model in autocomplete.Models" :key='model'>
+        {{ model.modelName }}
+      </option>
+    </select>
     </div>
   </div>
   <div class="row">
@@ -111,7 +115,8 @@
         description:"",
         time:Date,
         autocomplete:{
-          Brands:[]
+          Brands:[],
+          Models:[]
         }
        }
      },
@@ -133,6 +138,13 @@
          .then((res)=>{
            this.autocomplete.Brands=res;
          });
-       }
-   }
+       },
+       watch:{
+        Brand(setBrand){
+          if(setBrand!=""){
+           PostService.GetModels(setBrand).then((res)=>{
+           this.autocomplete.Models=res;
+         });
+        }}}
+      }
  </script>

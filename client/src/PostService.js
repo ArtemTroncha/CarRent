@@ -12,18 +12,36 @@ class PostService{
             })
         }
     )}
-    static GetBrands(info){
+    static GetModels(brand){
         const options = {
             method: 'GET',
-            url: 'https://car-data.p.rapidapi.com/cars/'+info,
+            url: 'https://cis-automotive.p.rapidapi.com/getModels',
+            params: {brandName: brand},
             headers: {
-              'X-RapidAPI-Host': 'car-data.p.rapidapi.com',
+              'X-RapidAPI-Host': 'cis-automotive.p.rapidapi.com',
+              'X-RapidAPI-Key': 'e52539f9f1mshb201b27bb7f65a1p1ba9d6jsn09b0e4776a46'
+            }
+          };
+          return new Promise ((resolve,reject) =>{
+            axios.request(options).then(function (response) {
+                resolve(response.data.data);
+            }).catch(function (error) {
+                reject(error);
+            });
+            })
+    }
+    static GetBrands(){
+        const options = {
+            method: 'GET',
+            url: 'https://cis-automotive.p.rapidapi.com/getBrands',
+            headers: {
+              'X-RapidAPI-Host': 'cis-automotive.p.rapidapi.com',
               'X-RapidAPI-Key': 'e52539f9f1mshb201b27bb7f65a1p1ba9d6jsn09b0e4776a46'
             }
           };
           return new Promise ((resolve,reject) =>{
           axios.request(options).then(function (response) {
-              resolve(response.data);
+              resolve(response.data.data);
           }).catch(function (error) {
               reject(error);
           });
