@@ -4,11 +4,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {check, validationResult} = require('express-validator')
 const router = express.Router()
-const config = require('../config/default.json')
 var ObjectId = require('mongoose').Types.ObjectId;
 
-
-const secretKey = config.secretKey
 
 
 //get all users 
@@ -57,7 +54,7 @@ router.post('/registration',
         console.log(error);
         res.send({massage:"server error"})
     }
-    res.status(201).send;
+    res.status(201).send({maessage: "User created"});
 })
 
 //login users
@@ -87,6 +84,22 @@ router.post('/login', async (req,res) => {
     res.status(201).send;
 })
 
+//edit user info
+router.put('/:id',[
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async (req,res) => {
+    try {
+        const {name,surname,email } = req.body
+        await User.findByIdAndUpdate(req.params.id,{name: name, surname: surname , email: email})
+        
+    } catch (error) {
+        console.log(error);
+        res.send({massage:"server error"})
+    }
+    res.status(201).send({message: "User updated"});
+})
 //delete users
 
 
