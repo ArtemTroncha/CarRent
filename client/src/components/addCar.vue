@@ -81,7 +81,7 @@
   </div>
   
   <div class="row">
-    <div class="col">
+    <div class="col mb-5">
       <button @click="AddCar" type="button" class="btn  btn-dark">Add Car</button>
     </div>
   </div>

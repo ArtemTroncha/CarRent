@@ -5,6 +5,8 @@ import UserComponent from './UserComponent'
 import showCar from './showCar'
 import addCar from './addCar'
 import profile from './profile'
+import ProductsCard from './ProductsCard'
+
 const routes= [
      {path :'/',component :loginPage},
      {path:'/registration',component:UserComponent},
@@ -12,6 +14,7 @@ const routes= [
      {path:'/home',component:homePage},
      {path:'/addCar',component:addCar},
      {path:'/profile',component:profile},
+     { name: 'productsCard', path: '/products/:id', component: ProductsCard},
 
 ]
 const router= createRouter({
