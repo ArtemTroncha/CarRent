@@ -2,7 +2,7 @@
 <div class="container mt-4 justify-content-center"> 
    <div class="row justify-content-center">
       <div class="col-5">
-       <div class="input-group mb-3">
+       <div class="input-group mb-1">
           <input type="text" class="form-control" placeholder="Find Car..." aria-label="Find Car..." aria-describedby="basic-addon2">
           <div class="input-group-append">
              <button class="btn btn-outline-secondary" type="button">Search</button>
@@ -11,14 +11,14 @@
 
       </div>
 
-   
-      <div class="col-1">
-         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Filter
-  </a>
+      <div class="row justify-content-center">
+      <div class="col-5">
+         <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+         Filter</a>
+      </div>
       </div>
   <div class="collapse" id="collapseExample">
-  <div class="card card-body">
+  <div class="card card-body ">
     <form class="form-inline" role="form">
                         <div class="row">
                            <div class="col">
