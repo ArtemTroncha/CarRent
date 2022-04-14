@@ -106,11 +106,6 @@ router.post('/',
         if (!creator) {
             return res.status(400).json({message: "Cant find creator"})
         }
-        //TODO: available date validate
-
-        //TODO: seat count min max validate
-
-        
 
         //create post if its ok
         const post = new Post(req.body)
@@ -153,6 +148,42 @@ router.post('/availability/:id',
     } catch (error) {
         res.send({massage:"server error"}) 
     }
+})
+
+//update post
+router.put('/:id', 
+    [
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async(req,res)=> {
+        try {
+            const changes ={}
+            if(req.body.title){ changes.title = req.body.title }
+            if(req.body.discription){ changes.discription = req.body.discription}
+            if(req.body.brand){ changes.brand = req.body.brand }
+            if(req.body.model){ changes.model = req.body.model }
+            if(req.body.version){ changes.version = req.body.version }
+            if(req.body.year){ changes.year = req.body.year }
+            if(req.body.color){ changes.color = req.body.color }
+            if(req.body.VIN){ changes.VIN = req.body.VIN  }
+            if(req.body.condition){ changes.condition = req.body.condition }
+            if(req.body.mileage){ changes.mileage = req.body.mileage }
+            if(req.body.fuel_type){ changes.fuel_type = req.body.fuel_type }
+            if(req.body.fuel_consumption){ changes.fuel_consumption = req.body.fuel_consumption }
+            if(req.body.seat_count){ changes.seat_count = req.body.seat_count }
+            
+            
+            //TODO: finish !!!! find better way to do it)
+            
+            await Post.findByIdAndUpdate(req.params.id,changes)
+            
+            //TODO: find different way to made it
+            }
+            catch (error) {
+            res.send({massage:"server error"}) 
+        }
+        return res.status(200).send({message:" Post updated"})
 })
 
 module.exports = router;
