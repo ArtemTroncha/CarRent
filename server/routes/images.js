@@ -4,7 +4,7 @@ const router = express.Router()
 const multer = require('multer')
 const upload = multer({dest: 'uploads/'})
 
-const { uploadFile , getFileStream } = require('../s3')
+const { getFileStream , uploadS3} = require('../s3')
 
 router.get('/:key', async(req,res)=> {
     try {
@@ -20,13 +20,19 @@ router.get('/:key', async(req,res)=> {
 })
 
 
-router.post('/', upload.single('image'), async (req,res) => {
-    const file = req.file
-    console.log(file)
-    const result = await uploadFile(file)
-    console.log(result)
-    const description = req.body.description
-    res.send({imagePath: `${result.Key}`})
+router.post('/', uploadS3.single('image'), async (req,res) => {
+    try {
+        const file = req.file
+        console.log(file)
+        //uploadS3.single(file)
+        //const result = await uploadS3(file)
+        //console.log(result)
+        const description = req.body.description
+        //res.send({imagePath: `${result.Key}`})
+        return res.status(200).send({message: "Image uploaded"})
+    } catch (error) {
+        res.status(404).json(error)
+    }
 })
 
 

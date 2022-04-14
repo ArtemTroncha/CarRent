@@ -24,6 +24,15 @@ router.get('/', async (req,res) => {
 //     }
 // })
 
+//test route to display dates in posts
+router.get('/avail', async(req,res) => {
+    try {
+        res.status(200).send(await Post.find({}).select('availability'))
+    } catch (error) {
+        res.send({massage:"server error"}) 
+    }
+})
+
 
   
 //filter
@@ -36,7 +45,7 @@ router.get('/search', async (req,res) => {
         if(req.query.model){ match.model = req.query.model }
         if(req.query.color){ match.color = req.query.color }
         if(req.query.condition){ match.condition = req.query.condition }
-        if(req.query.meileage){ match.brand = req.query.brand }
+        if(req.query.mileage){ match.mileage = req.query.mileage }
         if(req.query.year){ match.year = req.query.year }
         
         console.log(match)
@@ -74,7 +83,7 @@ router.get('/:id',
             res.send(await Post.find({_id: new ObjectId(req.params.id)}))
         } catch (error) {
             console.log(error)
-        res.send({massage:"server error"})
+            res.send({massage:"server error"})
         }
         res.status(201).send;
 })
@@ -113,6 +122,37 @@ router.post('/',
         res.send({massage:"server error"})
     }
     res.status(201).send;
+})
+
+//add new time interval 
+router.post('/availability/:id', 
+    [
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async(req,res) => {
+    try {
+        const postId = new ObjectId(req.params.id)
+        var isExist = await Post.findById(postId)
+        if(!isExist)
+        {
+            return res.status(400).json({massage: "Posts with that id does not exist"})
+        }
+        const data = req.body
+        await Post.updateOne({_id: postId},
+        {
+        $push: {
+            availability : {
+                "start_date": data.startDate,
+                "end_date": data.endDate
+                }
+            }
+        });
+        
+        return res.status(200).send("Added new date")
+    } catch (error) {
+        res.send({massage:"server error"}) 
+    }
 })
 
 module.exports = router;
