@@ -12,6 +12,39 @@ class PostService{
             })
         }
     )}
+    static SearchPosts(Brand,Model,Color,Version,Condition,Mileage,Year){
+        let search_url=url+"/search?"
+        if(Brand!=""){
+            search_url+="brand="+Brand+"&"
+        }
+        if(Model!=""){
+            search_url+="model="+Model+"&"
+        }
+        if(Color!=""){
+            search_url+="color="+Color+"&"
+        }
+        if(Version!=""){
+            search_url+="version="+Version+"&"
+        }
+        if(Condition!=""){
+            search_url+="condition="+Condition+"&"
+        }
+        if(Mileage){
+            search_url+="mileage="+Mileage+"&"
+        }
+        if(Year){
+            search_url+="year="+Year+"&"
+        }
+        return new Promise ((resolve,reject) =>{
+            axios.get(search_url)
+            .then((res) =>{
+               resolve(res.data)
+            })
+            .catch((err)=> {
+                reject(err)
+            })
+        })   
+    }
     static GetModels(brand){
         const options = {
             method: 'GET',

@@ -36,7 +36,7 @@ router.get('/search', async (req,res) => {
         if(req.query.model){ match.model = req.query.model }
         if(req.query.color){ match.color = req.query.color }
         if(req.query.condition){ match.condition = req.query.condition }
-        if(req.query.meileage){ match.brand = req.query.brand }
+        if(req.query.mileage){ match.mileage = req.query.mileage }
         if(req.query.year){ match.year = req.query.year }
         
         console.log(match)

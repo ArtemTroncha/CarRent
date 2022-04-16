@@ -10,25 +10,15 @@
   </div>
 </template>
 <script>
-
-import PostService from "../PostService";
 import PostModel from "./PostModel.vue"
 export default {
   name:'showCar',
   components:{PostModel},
-  data(){
-    return{
+  props:{
       posts:[]
-      }
-    },
+  },
   async created(){
-   await PostService.GetPosts()
-   .then((res)=>{
-     console.log(res)
-     this.posts=res
-   })
-   .catch((err)=>{
-     console.log(err)})
+   
    }
   
 }
