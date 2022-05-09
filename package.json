@@ -29,7 +29,8 @@
     "mongoose": "^6.2.7",
     "vuex": "^4.0.2",
     "mongo-querystring": "^4.1.1",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "multer-s3": "^2.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
