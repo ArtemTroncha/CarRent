@@ -98,7 +98,7 @@ router.post('/',
         var isValid = mongoose.Types.ObjectId.isValid(createdBy_ID);
         if(!isValid)
         {
-            return res.status(400).json({massage: "createdBy_Id error"})
+            return res.status(400).json({message: "createdBy_Id error"})
         }
         
         const creator = await User.findById(createdBy_ID)
@@ -110,11 +110,11 @@ router.post('/',
         //create post if its ok
         const post = new Post(req.body)
         await post.save()
-        return res.send({maessage: "Post created"}) 
+        return res.send({message: "Post created"}) 
 
     } catch (e) {
         console.log(e)
-        res.send({massage:"server error"})
+        res.send({message:"server error"})
     }
     res.status(201).send;
 })
