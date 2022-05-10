@@ -18,6 +18,9 @@ const Post = new Schema({
     availability: [{
         start_date: {type: Date, required: true},
         end_date: {type: Date, required: true}
+    }],
+    images:[{
+        url: { type: String , required: true}
     }]
 })
 
