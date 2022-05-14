@@ -91,11 +91,33 @@ class PostService{
             })
         }
         )}
-    static AddPost(createdBy_ID,title,discription,available_from,
+    static GetById(id){
+        return new Promise ((resolve,reject) =>{
+            axios.get(url+'/'+id)
+            .then((res) =>{
+               resolve(res.data)
+            })
+            .catch((err)=> {
+                reject(err)
+            })
+        }
+        )
+    }
+    static UpdatePost(id,title,discription,
+        brand,model,version,year,color,VIN,condition,mileage,
+        fuel_type, fuel_consumption,seat_count){
+        return axios.put(url+'/'+id,{
+            title,discription,
+            brand,model,version,year,color,VIN,condition,mileage,
+            fuel_type, fuel_consumption,seat_count
+        })
+    }
+
+    static AddPost(createdBy_ID,title,discription,
         brand,model,version,year,color,VIN,condition,mileage,
         fuel_type, fuel_consumption,seat_count){
         return axios.post(url,{
-            createdBy_ID,title,discription,available_from,
+            createdBy_ID,title,discription,
             brand,model,version,year,color,VIN,condition,mileage,
             fuel_type, fuel_consumption,seat_count
         }).then((res)=>{

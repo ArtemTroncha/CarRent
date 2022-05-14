@@ -53,12 +53,14 @@
     <label for="FuelCons" class="form-label">Fuel consumption</label>
     <input v-model="FuelCons" type="number" step="100" class="form-control" placeholder="Fuel consumption" aria-label="Fuel consumption">
   </div>
+  </div>
+  <div class="row">
   <div class="col">
         <label for="seats" class="form-label">Seats</label>
     <input v-model="seats" id="seats" type="number" max=8 class="form-control" placeholder="Count of Seats" aria-label="Count of Seats">
   </div>
-  </div>
-  <div class="row">
+  
+  
     <div class="col mb-4">
           <label for="inputState"  class="form-label">Fuel type</label>
       <select v-model="FuelType" id="inputState" class="form-select">
@@ -66,10 +68,6 @@
           <option>Diesel</option>
           <option>LPG</option>
         </select>
-    </div>
-    <div class="col mb-4">
-        <label for="date" class="form-label">Rent date</label>
-      <input v-model="time" id="date" type="date"   class="form-control" >
     </div>
   </div>
   <div class="row">
@@ -124,8 +122,8 @@
        async AddCar(){
          const CreatorID=await UserService.decode(localStorage.getItem('token')).id
          const title = this.Brand+" "+this.Model+" "+this.Year
-         await PostService.AddPost(CreatorID,title,this.description,
-         this.time,this.Brand,this.Model,this.Version,this.Year,this.Color
+         await PostService.AddPost(CreatorID,title,this.description
+         ,this.Brand,this.Model,this.Version,this.Year,this.Color
          ,this.VIN,this.Condition,this.Mileage,this.FuelType,this.FuelCons,this.seats)
          .then((res)=>{
            console.log(res);

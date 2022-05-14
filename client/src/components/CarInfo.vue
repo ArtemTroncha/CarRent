@@ -149,6 +149,7 @@ import UserService from '../UserService'
        }
      },
     created(){
+      console.log(this.$route.params.id)
       PostService.GetById(this.$route.params.id)
       .then((res)=>{
         this.post=res[0];

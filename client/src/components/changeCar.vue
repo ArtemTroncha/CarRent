@@ -93,7 +93,6 @@
   </form>
  </template>
  <script>
-   import UserService from "../UserService"
    import PostService from "../PostService"
    export default{
      data(){
@@ -122,10 +121,9 @@
         console.log(this.$refs.CarImg.files[0])
       },
        async ChangeCar(){
-         const CreatorID=await UserService.decode(localStorage.getItem('token')).id
          const title = this.Brand+" "+this.Model+" "+this.Year
          const id =this.$route.params.id.toString()
-         await PostService.UpdatePost(id,CreatorID,title,this.description,
+         await PostService.UpdatePost(id,title,this.description,
          this.Brand,this.Model,this.Version,this.Year,this.Color
          ,this.VIN,this.Condition,this.Mileage,this.FuelType,this.FuelCons,this.seats)
          .then((res)=>{
