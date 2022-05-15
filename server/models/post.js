@@ -2,6 +2,7 @@ const {Schema, model, mongoose} = require('mongoose')
 
 const Post = new Schema({
     createdBy_ID: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    createdAt: {type: Date, default: Date.now},
     title: {type: String,require: true},
     discription: {type: String},
     brand: {type: String, required: true},

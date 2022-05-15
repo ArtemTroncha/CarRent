@@ -15,15 +15,6 @@ router.get('/', async (req,res) => {
     }
 })
 
-// //get all posts( full )
-// router.get('/full', async (req,res) => {
-//     try {
-//         res.status(200).send(await Post.find({}))
-//     } catch (error) {
-//         res.send({massage:"server error"}) 
-//     }
-// })
-
 //test route to display dates in posts
 router.get('/avail', async(req,res) => {
     try {
@@ -39,20 +30,48 @@ router.get('/avail', async(req,res) => {
 //TODO: validate year, 
 router.get('/search', async (req,res) => {
     try {
-        const match = {}
-        if(req.query.brand){ match.brand = req.query.brand }
-        if(req.query.version){ match.version = req.query.version}
-        if(req.query.model){ match.model = req.query.model }
-        if(req.query.color){ match.color = req.query.color }
-        if(req.query.condition){ match.condition = req.query.condition }
-        if(req.query.mileage){ match.mileage = req.query.mileage }
-        if(req.query.year){ match.year = req.query.year }
-        
-        console.log(match)
+        //get all objects from req.query
+        const queryObj = {...req.query}
+        //delete fields helping to visualize content
+        const excludedFields = ['page', 'sort', 'limit', 'fields']
+        excludedFields.forEach(el => delete queryObj[el])
 
-    res.status(200).send(await Post.find(match))
+        let queryString = JSON.stringify(queryObj)
+        //TODO: add check if [gte...] used only with year,mileage,fuel_consumption,availability
+        queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`) 
+        let query = Post.find(JSON.parse(queryString))
+
+        if(req.query.sort){
+            const sortBy = req.query.sort.split(',').join(' ')
+            console.log(sortBy);
+            query = query.sort(sortBy)
+        }
+        else {
+            query = query.sort('-createdAt')
+        }
+  
+        //pagination
+        // if (!req.query.page) {
+        //     req.query.page = 1;
+        // }
+        // if (!req.query.size) {
+        //     req.query.size = 10;
+        // }
+        //const limit = parseInt(req.query.size)
+    
+        const posts = await query
+        res.status(200).json({
+        status: 'success',
+        results: posts.length,
+        //page:req.query.page,
+        data: {
+            posts
+            }
+        })
+
     } catch (error) {
-        res.send({massage:"server error"})
+        res.status(400)
+        .send({massage:"server error"})
     }
 })
 

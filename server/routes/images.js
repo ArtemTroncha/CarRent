@@ -8,9 +8,7 @@ const { getFileStream , uploadS3} = require('../s3')
 router.get('/:key', async(req,res)=> {
     try {
         const key = req.params.key
-        console.log(key)
         const readStream = getFileStream(key)
-        console.log(readStream)
         readStream.pipe(res)
 
     } catch (error) {
