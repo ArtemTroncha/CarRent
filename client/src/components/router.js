@@ -6,6 +6,7 @@ import addCar from './addCar'
 import profile from './profile'
 import CarInfo from './CarInfo'
 import changeCar from './changeCar'
+import test from './UI/MyCalendar.vue'
 
 const routes= [
      {path :'/',component :loginPage},
@@ -14,7 +15,8 @@ const routes= [
      {path:'/addCar',component:addCar},
      {path:'/profile',component:profile},
      {path:'/cars/:id',component:CarInfo},
-     {path:'/cars/changing/:id',component:changeCar}
+     {path:'/cars/changing/:id',component:changeCar},
+     {path:'/test',component:test}
 ]
 const router= createRouter({
    routes,

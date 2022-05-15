@@ -2,6 +2,7 @@
 <form @submit.prevent="GetBrands">
  
   <div class="container mt-4"> 
+      
     <div class="row ">
     <div class="col-sm-8 mx-auto">
   <div class="row">
@@ -78,7 +79,7 @@
     <div class="col mb-5">
       
       <label class="form-label" for="customFile">Add Photo</label>
-      <input type="file" class="form-control" id="customFile" />
+      <input type="file" name="filefield" multiple ref="myFiles" class="form-control" id="customFile" />
     
   </div>
   
@@ -111,25 +112,50 @@
         seats:Number,
         FuelType:"",
         description:"",
-        time:Date,
+        images:[],
         autocomplete:{
           Brands:[],
           Models:[]
-        }
+        },
+        error:""
        }
      },
      methods:{
-       async AddCar(){
+       async AddCar()
+        {
+         try {
+           if ( this.$refs.myFiles.files.length>8){
+             throw 'number of files is bad'
+           }
+           
+           for(let i =0 ; i<this.$refs.myFiles.files.lenght();i++){
+           this.images.push(this.$refs.myFiles.files[i])
+          }
+         
+         let url=Array;
+         await PostService.PostImg(this.images).then((res)=>{
+           console.log(res)
+           url=res.data.urls
+           console.log(url)
+         }).catch((err)=>{
+           console.log(err)
+         })
+
          const CreatorID=await UserService.decode(localStorage.getItem('token')).id
          const title = this.Brand+" "+this.Model+" "+this.Year
          await PostService.AddPost(CreatorID,title,this.description
          ,this.Brand,this.Model,this.Version,this.Year,this.Color
-         ,this.VIN,this.Condition,this.Mileage,this.FuelType,this.FuelCons,this.seats)
+         ,this.VIN,this.Condition,this.Mileage,this.FuelType,this.FuelCons,this.seats,url)
          .then((res)=>{
            console.log(res);
            this.$router.push('/profile')
          })
-       }},
+       }
+       catch(err){
+         this.error=err
+       }
+        }
+       },
 
       async created(){
          await PostService.GetBrands("makes")

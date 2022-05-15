@@ -3,7 +3,21 @@
     
    <div class="row">
   <div class="col-6">
-    <img  class=" mt-3 img-fluid" src="https://car-rent-storage.s3.amazonaws.com/1649895561413">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-90" style="width:100%;height:100%" v-bind:src="post.images[0].url" alt="First slide">
+    </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+  </a>
+    </div>
   
     <button class="btn btn-secondary" style="margin-left:30px" v-if='isOwner' @click="change"> Change 
       <svg xmlns="http://www.w3.org/2000/svg" style="margin-left:4px" width="16" height="16" fill="currentColor" class="bi bi-wrench-adjustable" viewBox="0 0 16 16">
@@ -87,13 +101,12 @@
 </div> 
 </div>
 <div class="col-6 "><hr></div>
-
 <h3>Description:</h3>
 <div class="row">
 <div class="col-6 ">
   <p class="mt-3">{{post.discription}}</p>
 </div>
-
+{{post.images[0]}}
 </div>
 <div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-bs-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -153,8 +166,8 @@ import UserService from '../UserService'
       PostService.GetById(this.$route.params.id)
       .then((res)=>{
         this.post=res[0];
-        
-         
+       // document.getElementById('main_img').src=this.post.images[0].url;
+        console.log(this.post.images[0].url)
       })
      
      
