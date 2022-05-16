@@ -1,8 +1,9 @@
+
 <template>
 <div class="container">
   <div class="row">
     <div class="col col_info">
-      <img style="width:615px"  class="infoimg" src="https://ireland.apollo.olxcdn.com/v1/files/7j8tc4yuz68u-PL/image;s=1000x700">
+      <img style="width:615px"  class="infoimg"  v-bind:src="post.images[0].url" >
     </div>
     <div class="col col_info" style="background-color: #fff; border-radius: 3%">
       <div class="row">
@@ -354,4 +355,5 @@ li{
   border-radius: 3%;
   padding-bottom: 20px;
 }
+
 </style>
