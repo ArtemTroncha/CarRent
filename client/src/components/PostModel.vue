@@ -47,13 +47,14 @@ export default{
   margin:auto;
   display:table;
 }
-img{
+/* img{
     width:150px;
-    height:120px
-}
+    height:120px;
+} */
 .card{
   margin:0 auto;
-  float:none
+  float:none;
+  border:0px;
 }
 .card-img-left {
         position: absolute;
@@ -69,4 +70,5 @@ img{
   #button{
     margin-left: 200px;
   }
-</style>
+  
+  </style>
