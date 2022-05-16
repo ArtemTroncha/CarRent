@@ -1,23 +1,39 @@
+
 <template>
-  <div class="container">
+<div class="container">
+  <div class="row">
+    <div class="col col_info">
+      <img style="width:615px"  class="infoimg"  v-bind:src="post.images[0].url" >
+    </div>
+    <div class="col col_info" style="background-color: #fff; border-radius: 3%">
+      <div class="row">
+        <h1 class="car_name">{{post.brand}} {{post.model}}</h1>
+      </div>
+      <br>
+      <br>
+      <h3>Description</h3>
+      <div class="row">
+        <div class="col-6  col_info">
+          <p class="mt-3">{{post.discription}}</p>
+        </div>
+      </div>
+
+      <!-- <div class="row buttt">
+        <div class="col">
+          <a class="btn_1" @click="change">Edit</a>
+          </div>
+          <div class="col">
+          <a class="btn_2" data-bs-toggle="modal" data-bs-target="#ModalLong">Set Time</a>
+            </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+  <!-- <div class="container">
     
    <div class="row">
   <div class="col-6">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-90" style="width:100%;height:100%" v-bind:src="post.images[0].url" alt="First slide">
-    </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only"></span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only"></span>
-  </a>
-    </div>
+    <img  class=" mt-3 img-fluid" src="https://car-rent-storage.s3.amazonaws.com/1649895561413">
   
     <button class="btn btn-secondary" style="margin-left:30px" v-if='isOwner' @click="change"> Change 
       <svg xmlns="http://www.w3.org/2000/svg" style="margin-left:4px" width="16" height="16" fill="currentColor" class="bi bi-wrench-adjustable" viewBox="0 0 16 16">
@@ -60,14 +76,66 @@
   </div>
   
   </div>
-  </div>
+  </div> -->
 
-<div class="row">
-<div class="col-12 col-mb-3">
+<div class="container">
+<div class="row desk">
+<!-- <div class="col-12 col-mb-3">
   <h2>Details:</h2> 
+</div> -->
+<div class="col opss col_info">
+  <ul class="spis_opis">
+    <li class="opis">Brand:{{post.brand}}</li>
+    <li class="opis">Model:{{post.model}}</li>
+    <li class="opis">Version:{{post.version}}</li>
+    <li class="opis">Year:{{post.year}}</li>
+    <li class="opis">Color:{{post.color}}</li>
+    <li class="opis">Condition:{{post.condition}}</li>
+    <li class="opis">Mileage:{{post.mileage}}</li>
+    <li class="opis">Fiel type:{{post.fuel_type}}</li>
+    <li class="opis">Consumption:{{post.fuel_consumption}}</li>
+    <li class="opis">Seats:{{post.seat_count}}</li>
+    <li class="opis">VIN:{{post.VIN}}</li>
+  </ul>
+  <br>
+ 
 </div>
-
-<div class="col-3">
+<div class="col col_info">
+  
+  <div class="col mt-4 col_info"  v-if="post.availability.length!=0">
+    <div style="margin-left:30px;">from</div> 
+    <ul v-for="date in post.availability" :key="date.start_date">
+      <div v-if= "date.start_date != undefined">
+    {{date.start_date.substring(0,10)}} 
+    {{date.start_date.substring(11,16)}}
+      </div>
+    </ul>
+    
+  </div>
+  <div class="col mt-4 col_info" v-if="post.availability.length!=0">
+    <div style="margin-left:30px;">to</div> 
+    <ul v-for="date in post.availability" :key="date.end_date">
+      <div v-if= "date.start_date != undefined">
+    {{date.end_date.substring(0,10)}} 
+    {{date.end_date.substring(11,16)}}
+      </div>
+    </ul>
+    
+  </div>
+  <div class="col col_info" v-else>
+    <h3 style="margin-top:10px">No time to rent</h3>
+  </div>
+  <div class="row buttt">
+        <div class="col col_info">
+          <a class="btn_1" @click="change">Edit</a>
+          </div>
+          <div class="col col_info">
+          <a class="btn_2" data-bs-toggle="modal" data-bs-target="#ModalLong">Set Time</a>
+            </div>
+      </div>
+</div>
+</div>
+<!-- <div class="col-3">
   <ul class="listItems">
     <li> Brand </li>
     <li> Model </li>
@@ -98,15 +166,11 @@
     <li> {{post.VIN}}</li>
     
   </ul>
-</div> 
-</div>
-<div class="col-6 "><hr></div>
-<h3>Description:</h3>
-<div class="row">
-<div class="col-6 ">
-  <p class="mt-3">{{post.discription}}</p>
-</div>
-{{post.images[0]}}
+</div>  -->
+
+
+
+
 </div>
 <div class="modal fade" id="ModalLong" tabindex="-1" role="dialog" aria-bs-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -116,11 +180,11 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-6">
+            <div class="col-6 col_info">
               <h3>from</h3>
           <input v-model="timeFrom" type="datetime-local">
             </div>
-            <div class="col-6">
+            <div class="col-6 col_info">
               <h3>to</h3>
           <input v-model="timeTo" type="datetime-local">
             </div>
@@ -166,8 +230,8 @@ import UserService from '../UserService'
       PostService.GetById(this.$route.params.id)
       .then((res)=>{
         this.post=res[0];
-       // document.getElementById('main_img').src=this.post.images[0].url;
-        console.log(this.post.images[0].url)
+        
+         
       })
      
      
@@ -213,4 +277,83 @@ li{
   margin:auto;
   display:table;
 }
+.container{
+  margin-top: 20px;
+}
+
+.car_name{
+  text-align: center;
+}
+.buttt{
+  text-align: center;
+  margin-top: 100px;
+}
+.btn_1{
+  display: inline-block;
+    vertical-align: top;
+    padding: 8px 30px;
+    border: 2px solid #000;
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.1s linear, color 0.1s linear;
+}
+.btn_1:hover{
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+}
+.btn_2{
+  margin-left: 25px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 8px 30px;
+
+  border: 2px solid #000;
+  color: #000;
+  background-color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.1s linear, color 0.1s linear;
+}
+.btn_2:hover{
+  color: #fff;
+  background-color: #000;
+  cursor: pointer;
+}
+.desk{
+  margin-top: 12px;
+}
+.spis_opis{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 616px;
+}
+.col_info{
+  margin-left: 6px;
+  margin-right: 6px;
+  background-color: #fff;
+  border-radius: 3%;
+}
+.opis{
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    margin: 16px 8px 0 0;
+    border-radius: 4px;
+    border: solid 1px #406367;
+
+}
+
+
+.opss{
+  background-color: #fff;
+  border-radius: 3%;
+  padding-bottom: 20px;
+}
+
 </style>
