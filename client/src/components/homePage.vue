@@ -109,7 +109,7 @@
                               <label class="filter-col" style="margin-right:0;" for="pref-perpage">Fuel Type</label>
                               <select v-model="filterdata.filterCondition" id="pref-perpage" class="form-control fill">
                                 <option value="Normal">Petrol</option>
-                                <option value="Bad">Diesel</option>
+                                <option value="Bad">Diesel:</option>
                                 <option selected="selected" value="Well">LPG</option>
                             </select>        
                            </div>
