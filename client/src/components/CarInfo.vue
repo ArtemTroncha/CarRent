@@ -84,17 +84,17 @@
 </div> -->
 <div class="col opss col_info">
   <ul class="spis_opis">
-    <li class="opis">Brand:{{post.brand}}</li>
-    <li class="opis">Model:{{post.model}}</li>
-    <li class="opis">Version:{{post.version}}</li>
-    <li class="opis">Year:{{post.year}}</li>
-    <li class="opis">Color:{{post.color}}</li>
-    <li class="opis">Condition:{{post.condition}}</li>
-    <li class="opis">Mileage:{{post.mileage}}</li>
-    <li class="opis">Fiel type:{{post.fuel_type}}</li>
-    <li class="opis">Consumption:{{post.fuel_consumption}}</li>
-    <li class="opis">Seats:{{post.seat_count}}</li>
-    <li class="opis">VIN:{{post.VIN}}</li>
+    <li class="opis">Brand: {{post.brand}}</li>
+    <li class="opis">Model: {{post.model}}</li>
+    <li class="opis">Version: {{post.version}}</li>
+    <li class="opis">Year: {{post.year}}</li>
+    <li class="opis">Color: {{post.color}}</li>
+    <li class="opis">Condition: {{post.condition}}</li>
+    <li class="opis">Mileage: {{post.mileage}}</li>
+    <li class="opis">Fiel type: {{post.fuel_type}}</li>
+    <li class="opis">Consumption: {{post.fuel_consumption}}</li>
+    <li class="opis">Seats: {{post.seat_count}}</li>
+    <li class="opis">VIN: {{post.VIN}}</li>
   </ul>
   <br>
  
@@ -344,7 +344,7 @@ li{
     padding: 6px 16px;
     margin: 16px 8px 0 0;
     border-radius: 4px;
-    border: solid 1px #406367;
+    border: solid 1px #344c4f4a;
 
 }
 
