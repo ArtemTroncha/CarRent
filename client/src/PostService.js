@@ -1,6 +1,25 @@
 import axios from 'axios';
 const url='http://localhost:3000/api/posts'
+const url_img='http://localhost:3000/api/images'
 class PostService{
+    static PostImg(files){
+        
+        let formData =new FormData();
+        files.forEach(file => {
+            formData.append('image',file)
+        }); 
+        return axios.post(url_img,formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Access-Control-Allow-Origin': '*',
+            }})
+        .then((res)=>{             
+            return res
+         }).catch((err) => {
+             return err            
+         })
+    }
+
     static GetPosts(){
         return new Promise ((resolve,reject) =>{
             axios.get(url)
@@ -105,21 +124,21 @@ class PostService{
     }
     static UpdatePost(id,title,discription,
         brand,model,version,year,color,VIN,condition,mileage,
-        fuel_type, fuel_consumption,seat_count){
+        fuel_type, fuel_consumption,seat_count,){
         return axios.put(url+'/'+id,{
             title,discription,
             brand,model,version,year,color,VIN,condition,mileage,
-            fuel_type, fuel_consumption,seat_count
+            fuel_type, fuel_consumption,seat_count,
         })
     }
-
+    
     static AddPost(createdBy_ID,title,discription,
         brand,model,version,year,color,VIN,condition,mileage,
-        fuel_type, fuel_consumption,seat_count){
+        fuel_type, fuel_consumption,seat_count,images){
         return axios.post(url,{
             createdBy_ID,title,discription,
             brand,model,version,year,color,VIN,condition,mileage,
-            fuel_type, fuel_consumption,seat_count
+            fuel_type, fuel_consumption,seat_count,images
         }).then((res)=>{
                
             return res
