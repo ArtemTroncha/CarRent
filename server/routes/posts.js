@@ -38,8 +38,9 @@ router.get('/search', async (req,res) => {
 
         let queryString = JSON.stringify(queryObj)
         //TODO: add check if [gte...] used only with year,mileage,fuel_consumption,availability
-        queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`) 
+        queryString = queryString.replace(/\b(gte|gt|lte|lt|regex)\b/g, match => `$${match}`) 
         let query = Post.find(JSON.parse(queryString))
+        
 
         if(req.query.sort){
             const sortBy = req.query.sort.split(',').join(' ')
@@ -51,19 +52,21 @@ router.get('/search', async (req,res) => {
         }
   
         //pagination
-        // if (!req.query.page) {
-        //     req.query.page = 1;
-        // }
-        // if (!req.query.size) {
-        //     req.query.size = 10;
-        // }
-        //const limit = parseInt(req.query.size)
+        if (!req.query.page) {
+            req.query.page = 1;
+        }
+
+        if (!req.query.limit) {
+            req.query.limit = 10;
+        }
+       
+        const skip = (req.query.page - 1) * req.query.limit
     
-        const posts = await query
+        const posts = await query.skip(skip)
+                                .limit(req.query.limit)
         res.status(200).json({
         status: 'success',
         results: posts.length,
-        //page:req.query.page,
         data: {
             posts
             }
@@ -128,6 +131,9 @@ router.post('/',
 
         //create post if its ok
         const post = new Post(req.body)
+
+        post.createdAt = Date.now();
+        console.log(post.createdAt);
         await post.save()
         return res.send({maessage: "Post created"}) 
 
@@ -153,6 +159,10 @@ router.post('/availability/:id',
             return res.status(400).json({massage: "Posts with that id does not exist"})
         }
         const data = req.body
+        console.log(data);
+        if(Object.keys(data).length === 0) {
+            return res.status(400).send({message : "Can't add empty time interval"})
+        }
         await Post.updateOne({_id: postId},
         {
         $push: {
@@ -163,11 +173,39 @@ router.post('/availability/:id',
             }
         });
         
-        return res.status(200).send("Added new date")
+        return res.status(200).send({message: "Added new date"})
     } catch (error) {
         res.send({massage:"server error"}) 
     }
 })
+
+//add reservation
+router.post('/availability/:id/reservation',
+    [
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async (req,res) =>{
+        try {
+            const reservation = {...req.body}
+            const postId = new ObjectId(req.params.id)
+            var post = await Post.findById(postId)
+            if(!post)
+            {
+                return res.status(400).json({massage: "Post with that id does not exist"})
+            }
+            if(post.availability)
+            {
+                return res.status(400).json({massage: "Post don't have time interval"})
+            }
+            //TODO: finish add new reservation time interval 
+            console.log(post.availability);
+
+        } catch (e) {
+            return res.status(400).send({massage: "Error"})
+        }
+        return res.status(400).send({massage: "Error"})
+    })
 
 //update post
 router.put('/:id', 
@@ -177,23 +215,7 @@ router.put('/:id',
     })],
     async(req,res)=> {
         try {
-            const changes ={}
-            if(req.body.title){ changes.title = req.body.title }
-            if(req.body.discription){ changes.discription = req.body.discription}
-            if(req.body.brand){ changes.brand = req.body.brand }
-            if(req.body.model){ changes.model = req.body.model }
-            if(req.body.version){ changes.version = req.body.version }
-            if(req.body.year){ changes.year = req.body.year }
-            if(req.body.color){ changes.color = req.body.color }
-            if(req.body.VIN){ changes.VIN = req.body.VIN  }
-            if(req.body.condition){ changes.condition = req.body.condition }
-            if(req.body.mileage){ changes.mileage = req.body.mileage }
-            if(req.body.fuel_type){ changes.fuel_type = req.body.fuel_type }
-            if(req.body.fuel_consumption){ changes.fuel_consumption = req.body.fuel_consumption }
-            if(req.body.seat_count){ changes.seat_count = req.body.seat_count }
-            
-            
-            //TODO: finish !!!! find better way to do it)
+            const changes = {...req.body}
             
             await Post.findByIdAndUpdate(req.params.id,changes)
             

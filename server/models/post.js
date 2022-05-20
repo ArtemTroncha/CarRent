@@ -2,7 +2,7 @@ const {Schema, model, mongoose} = require('mongoose')
 
 const Post = new Schema({
     createdBy_ID: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    createdAt: {type: Date, default: Date.now},
+    createdAt: {type: Date},
     title: {type: String,require: true},
     discription: {type: String},
     brand: {type: String, required: true},
@@ -18,11 +18,17 @@ const Post = new Schema({
     seat_count: {type: Number, required: true},
     availability: [{
         start_date: {type: Date, required: true},
-        end_date: {type: Date, required: true}
+        end_date: {type: Date, required: true},
+        reserved:[{
+            start_date: {type: Date, required: true},
+            end_date: {type: Date, required: true}, 
+            reservedBy_ID: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+        }]
     }],
     images:[{
         url: { type: String , required: true}
-    }]
+    }],
+    price: {type: Number, required: true}
 })
 
 module.exports = model('Post',Post); 
