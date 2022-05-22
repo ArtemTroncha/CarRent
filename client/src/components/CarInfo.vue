@@ -99,9 +99,9 @@
   <br>
  
 </div>
-<div class="col col_info">
-  
-  <div class="col mt-4 col_info"  v-if="post.availability.length!=0">
+<div class="col col_info calendar">
+  <calendar> </calendar>
+  <!-- <div class="col mt-4 col_info"  v-if="post.availability.length!=0">
     <div style="margin-left:30px;">from</div> 
     <ul v-for="date in post.availability" :key="date.start_date">
       <div v-if= "date.start_date != undefined">
@@ -123,7 +123,7 @@
   </div>
   <div class="col col_info" v-else>
     <h3 style="margin-top:10px">No time to rent</h3>
-  </div>
+  </div> -->
   <div class="row buttt">
         <div class="col col_info">
           <a class="btn_1" @click="change">Edit</a>
@@ -202,7 +202,11 @@
 <script>
 import PostService from '../PostService'
 import UserService from '../UserService'
+import Calendar from './UI/MyCalendar.vue'
   export default{
+    components:{
+      Calendar
+    },
      name:'carInfo',
      data(){
        return{
@@ -285,7 +289,8 @@ li{
 }
 .buttt{
   text-align: center;
-  margin-top: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .btn_1{
   display: inline-block;
@@ -353,5 +358,9 @@ li{
   background-color: #fff;
   border-radius: 3%;
   padding-bottom: 20px;
+}
+.calendar{
+  justify-content: center;
+  padding-top: 10px;
 }
 </style>
