@@ -14,17 +14,6 @@ router.get('/', async (req,res) => {
         res.send({massage:"server error"}) 
     }
 })
-
-//test route to display dates in posts
-router.get('/avail', async(req,res) => {
-    try {
-        res.status(200).send(await Post.find({}).select('availability'))
-    } catch (error) {
-        res.send({massage:"server error"}) 
-    }
-})
-
-
   
 //filter
 //TODO: validate year, 
@@ -159,7 +148,7 @@ router.post('/availability/:id',
             return res.status(400).json({massage: "Posts with that id does not exist"})
         }
         const data = req.body
-        console.log(data);
+        
         if(Object.keys(data).length === 0) {
             return res.status(400).send({message : "Can't add empty time interval"})
         }
@@ -167,8 +156,8 @@ router.post('/availability/:id',
         {
         $push: {
             availability : {
-                "start_date": data.startDate,
-                "end_date": data.endDate
+                "start_date": data.start_date,
+                "end_date": data.end_date
                 }
             }
         });
@@ -179,7 +168,7 @@ router.post('/availability/:id',
     }
 })
 
-//add reservation
+//add reservation interval
 router.post('/availability/:id/reservation',
     [
     check('id').customSanitizer(value => {
@@ -194,18 +183,91 @@ router.post('/availability/:id/reservation',
             {
                 return res.status(400).json({massage: "Post with that id does not exist"})
             }
-            if(post.availability)
+            if(!post.availability)
             {
                 return res.status(400).json({massage: "Post don't have time interval"})
             }
             //TODO: finish add new reservation time interval 
-            console.log(post.availability);
-
+            await Post.updateOne(
+                {
+                    _id: postId, 
+                    availability: { $elemMatch: {start_date : {$lte: reservation.start_date}, end_date: {$gte: reservation.end_date}}}
+                },
+                { $push: {
+                    "availability.$.reserved": {
+                                "start_date": reservation.start_date,
+                                "end_date": reservation.end_date,
+                                "reservedBy_ID": reservation.reservedBy_ID
+                    }}
+                });
+            
+                return res.status(200).send({message: "Added new reservation date"})
         } catch (e) {
+            console.log(e);
             return res.status(400).send({massage: "Error"})
         }
-        return res.status(400).send({massage: "Error"})
     })
+
+//return available dates of post
+router.get('/avail/:id', 
+    [
+    check('id').customSanitizer(value => {
+        return ObjectId(value);
+    })],
+    async(req,res) => {
+    try {
+        const postId = new ObjectId(req.params.id)
+        const post = await Post.findById(postId)
+       
+        
+        let availability = []
+        
+        
+        for(let i = 0; i < post.availability.length; i++){
+            let input = post.availability[i]
+            if(input.reserved.length != 0)
+            {
+                for(let i = 0; i <= input.reserved.length; i++)
+                {   
+                    if(i == 0)
+                    {
+                        availability.push({"start_date": input.start_date,"end_date": dayBefore(input.reserved[i].start_date)})
+                        continue   
+                    }
+                    else if ( i == input.reserved.length){
+                        availability.push({"start_date": dayAfter(input.reserved[i-1].end_date),"end_date": input.end_date})
+                        continue
+                    }
+                    availability.push({"start_date": dayAfter(input.reserved[i-1].end_date),"end_date": dayBefore(input.reserved[i].start_date)})
+                    
+                }
+            }
+            //if dont have any reservation return full interval
+            else {
+                availability.push({"start_date": input.start_date,"end_date" : input.end_date})
+            }
+            
+        }
+        res.status(200).send(availability)
+
+    } catch (error) {
+        console.log(error);
+        res.send({massage:"server error"})
+    }
+})
+
+function dayBefore(date = new Date()){
+    const newDate = new Date(date.getTime())
+
+    newDate.setDate(date.getDate() - 1)
+    return newDate 
+}
+function dayAfter(date = new Date()){
+    const newDate = new Date(date.getTime())
+
+    newDate.setDate(date.getDate() + 1)
+    return newDate 
+}
 
 //update post
 router.put('/:id', 
@@ -219,11 +281,11 @@ router.put('/:id',
             
             await Post.findByIdAndUpdate(req.params.id,changes)
             
-            //TODO: find different way to made it
+            
             }
             catch (error) {
-            res.send({massage:"server error"}) 
-        }
+                res.send({massage:"server error"}) 
+            }
         return res.status(200).send({message:" Post updated"})
 })
 
