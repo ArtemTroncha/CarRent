@@ -187,7 +187,7 @@ router.post('/availability/:id/reservation',
             {
                 return res.status(400).json({massage: "Post don't have time interval"})
             }
-            //TODO: finish add new reservation time interval 
+            
             await Post.updateOne(
                 {
                     _id: postId, 
@@ -281,12 +281,12 @@ router.put('/:id',
             
             await Post.findByIdAndUpdate(req.params.id,changes)
             
-            
+            return res.status(200).send({message:" Post updated"})
+
             }
-            catch (error) {
-                res.send({massage:"server error"}) 
-            }
-        return res.status(200).send({message:" Post updated"})
-})
+        catch (error) {
+            res.send({message:"server error"}) 
+        }
+})       
 
 module.exports = router;

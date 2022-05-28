@@ -9,6 +9,7 @@ require('dotenv').config() // dotenv
 const users = require('./routes/users')
 const posts = require('./routes/posts')
 const images = require('./routes/images')
+const orders = require('./routes/orders')
 
 //middleware
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(cors())
 app.use('/api/users', users);
 app.use('/api/posts', posts);
 app.use('/api/images', images);
+app.use('/api/orders', orders);
 
 //config
 const DB_URL = process.env.DB_URL
